@@ -16,7 +16,8 @@ def client(tmp_path, monkeypatch):
     monkeypatch.setattr(main, "DB_PATH", tmp_path / "jobs.sqlite3")
     monkeypatch.setenv("TTS_API_KEY", "test-secret-token")
     monkeypatch.setenv("AUDIO_URL_SECRET", "test-link-secret")
-    yield TestClient(main.app)
+    with TestClient(main.app) as test_client:
+        yield test_client
 
 
 def test_health_is_public(client):
