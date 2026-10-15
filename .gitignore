@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+data/
+*.mp3
+*.partial.mp3
+.DS_Store
+Thumbs.db
