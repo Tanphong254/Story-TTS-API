@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: story-tts-api
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    disk:
+      name: story-tts-data
+      mountPath: /var/data
+      sizeGB: 2
+    envVars:
+      - key: TTS_DATA_DIR
+        value: /var/data
+      - key: TTS_API_KEY
+        generateValue: true
+      - key: AUDIO_URL_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: MAX_QUEUED_JOBS
+        value: "50"
+      - key: AUDIO_URL_TTL_SECONDS
+        value: "86400"
